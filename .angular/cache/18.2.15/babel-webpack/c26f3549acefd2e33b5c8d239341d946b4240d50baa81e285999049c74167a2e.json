@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { EmailFormComponent } from './email-form/email-form.component';\nimport { CvComponent } from './cv/cv.component';\nexport const routes = [{\n  path: '',\n  component: CvComponent\n}, {\n  path: 'contact',\n  component: EmailFormComponent\n}];","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

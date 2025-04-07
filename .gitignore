@@ -80,3 +80,39 @@ yarn-error.log*
 *.js.map
 *.css.map
 *.ts.map
+
+# Angular specific
+.angular/cache
+.angular/dist
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+
+# Misc
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+.env
+
+# Build files
+*.pack
+*.pack.*

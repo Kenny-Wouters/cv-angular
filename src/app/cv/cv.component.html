@@ -6,6 +6,13 @@
   <!-- Dark overlay for better text readability -->
   <div class="dark-overlay"></div>
   
+  <!-- Language Selector -->
+  <div class="language-selector">
+    <button (click)="languageService.setLanguage('en')" [class.active]="currentLanguage === 'en'" class="lang-btn">EN</button>
+    <button (click)="languageService.setLanguage('fr')" [class.active]="currentLanguage === 'fr'" class="lang-btn">FR</button>
+    <button (click)="languageService.setLanguage('nl')" [class.active]="currentLanguage === 'nl'" class="lang-btn">NL</button>
+  </div>
+  
   <!-- Content container -->
   <div class="content-container">
     <!-- Header Section -->
@@ -18,10 +25,10 @@
           </div>
           <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">{{personalInfo.name}}</h1>
           <h2 class="text-xl md:text-2xl text-blue-400 mb-4">{{personalInfo.title}}</h2>
-          <p class="text-lg text-gray-300 mb-8">{{personalInfo.tagline}}</p>
+          <p class="text-lg text-gray-300 mb-8">{{getTranslatedText(personalInfo.tagline)}}</p>
           <div class="flex justify-center space-x-4">
             <a [routerLink]="['/contact']" class="button">
-              <i class="fas fa-envelope mr-2"></i>Contact
+              <i class="fas fa-envelope mr-2"></i>{{languageService.getTranslation('contact')}}
             </a>
             <a [href]="personalInfo.linkedin" target="_blank" class="button">
               <i class="fab fa-linkedin mr-2"></i>LinkedIn
@@ -43,26 +50,26 @@
           <section class="section">
             <h2 class="text-2xl font-bold text-white mb-4 flex items-center">
               <i class="fas fa-user-circle text-blue-400 mr-2"></i>
-              About Me
+              {{languageService.getTranslation('about')}}
             </h2>
-            <p class="text-gray-300">Passionate Full Stack Developer with expertise in building scalable web applications. Experienced in both frontend and backend development, with a strong focus on modern technologies and best practices. Committed to writing clean, maintainable code and creating exceptional user experiences.</p>
+            <p class="text-gray-300 whitespace-pre-line">{{getTranslatedText(aboutMe)}}</p>
           </section>
 
           <!-- Experience Section -->
           <section class="section">
             <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
               <i class="fas fa-briefcase text-blue-400 mr-2"></i>
-              Work Experience
+              {{languageService.getTranslation('experience')}}
             </h2>
             <div class="space-y-6">
               <div *ngFor="let exp of experiences" class="relative pl-8 border-l-2 border-blue-900">
                 <div class="absolute left-[-9px] top-2 w-4 h-4 bg-blue-500 rounded-full"></div>
                 <div class="mb-4">
-                  <h3 class="text-xl font-semibold text-white">{{exp.position}}</h3>
+                  <h3 class="text-xl font-semibold text-white">{{getTranslatedText(exp.position)}}</h3>
                   <h4 class="text-lg text-blue-400">{{exp.company}}</h4>
                   <p class="text-sm text-gray-400">{{exp.period}}</p>
                 </div>
-                <p class="text-gray-300">{{exp.description}}</p>
+                <p class="text-gray-300">{{getTranslatedText(exp.description)}}</p>
               </div>
             </div>
           </section>
@@ -71,12 +78,12 @@
           <section class="section">
             <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
               <i class="fas fa-project-diagram text-blue-400 mr-2"></i>
-              Featured Projects
+              {{languageService.getTranslation('projects')}}
             </h2>
             <div class="space-y-6">
               <div *ngFor="let project of projects" class="border-b border-gray-700 pb-6 last:border-0">
-                <h3 class="text-xl font-semibold text-white mb-2">{{project.name}}</h3>
-                <p class="text-gray-300 mb-4">{{project.description}}</p>
+                <h3 class="text-xl font-semibold text-white mb-2">{{getTranslatedText(project.name)}}</h3>
+                <p class="text-gray-300 mb-4">{{getTranslatedText(project.description)}}</p>
                 <div class="flex flex-wrap gap-2">
                   <span *ngFor="let tech of project.technologies" 
                         class="px-3 py-1 bg-blue-900 text-blue-300 rounded-full text-sm">
@@ -86,55 +93,25 @@
               </div>
             </div>
           </section>
+        </div>
 
+        <!-- Right Column -->
+        <div class="space-y-8">
           <!-- Education Section -->
           <section class="section">
             <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
               <i class="fas fa-graduation-cap text-blue-400 mr-2"></i>
-              Education
+              {{languageService.getTranslation('education')}}
             </h2>
             <div class="space-y-6">
               <div *ngFor="let edu of education" class="relative pl-8 border-l-2 border-blue-900">
                 <div class="absolute left-[-9px] top-2 w-4 h-4 bg-blue-500 rounded-full"></div>
                 <div class="mb-4">
-                  <h3 class="text-xl font-semibold text-white">{{edu.degree}}</h3>
+                  <h3 class="text-xl font-semibold text-white">{{getTranslatedText(edu.degree)}}</h3>
                   <h4 class="text-lg text-blue-400">{{edu.institution}}</h4>
                   <p class="text-sm text-gray-400">{{edu.period}}</p>
                 </div>
-                <p class="text-gray-300">{{edu.description}}</p>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Right Column -->
-        <div class="space-y-8">
-          <!-- Contact Section -->
-          <section class="section">
-            <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
-              <i class="fas fa-address-card text-blue-400 mr-2"></i>
-              Contact
-            </h2>
-            <div class="space-y-4">
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-envelope text-blue-400"></i>
-                <a [routerLink]="['/contact']" class="text-gray-300 hover:text-blue-400 cursor-pointer">{{personalInfo.email}}</a>
-              </div>
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-phone text-blue-400"></i>
-                <span class="text-gray-300">{{personalInfo.phone}}</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <i class="fas fa-map-marker-alt text-blue-400"></i>
-                <span class="text-gray-300">{{personalInfo.location}}</span>
-              </div>
-              <div class="flex items-center space-x-3">
-                <i class="fab fa-linkedin text-blue-400"></i>
-                <a [href]="personalInfo.linkedin" target="_blank" class="text-gray-300 hover:text-blue-400">LinkedIn Profile</a>
-              </div>
-              <div class="flex items-center space-x-3">
-                <i class="fab fa-github text-blue-400"></i>
-                <a [href]="personalInfo.github" target="_blank" class="text-gray-300 hover:text-blue-400">GitHub Profile</a>
+                <p class="text-gray-300">{{getTranslatedText(edu.description)}}</p>
               </div>
             </div>
           </section>
@@ -143,11 +120,11 @@
           <section class="section">
             <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
               <i class="fas fa-code text-blue-400 mr-2"></i>
-              Technical Skills
+              {{languageService.getTranslation('skills')}}
             </h2>
             <div class="space-y-6">
               <div *ngFor="let skill of skills" class="space-y-2">
-                <h3 class="text-lg font-semibold text-white">{{skill.category}}</h3>
+                <h3 class="text-lg font-semibold text-white">{{getTranslatedText(skill.category)}}</h3>
                 <div class="flex flex-wrap gap-2">
                   <span *ngFor="let item of skill.items" 
                         class="px-3 py-1 bg-blue-900 text-blue-300 rounded-full text-sm hover:bg-blue-800 transition-colors">
